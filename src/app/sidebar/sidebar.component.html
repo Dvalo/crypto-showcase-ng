@@ -1,7 +1,25 @@
 <div class="cp-sidebar">
   <div class="cp-sidebar-inner" *ngIf="cryptoData">
-    <div class="cp-crypto-item" *ngFor="let crypto of cryptoData.coins">
-      <div class="cp-crypto-name">{{ crypto.name }}</div>
+    <div class="cp-crypto-item" *ngFor="let crypto of cryptoData">
+      <div class="cp-crypto-image">
+        <img src="{{ crypto.icon }}" />
+      </div>
+      <div class="cp-crypto-details">
+        <div class="cp-crypto-name-wrapper">
+          <div class="cp-crypto-name">{{ crypto.name }}</div>
+          <div class="cp-crypto-symbol">{{ crypto.symbol }}</div>
+        </div>
+        <div class="cp-crypto-price-wrapper">
+          <div class="cp-crypto-price">${{ crypto.price.toFixed(2) }}</div>
+          <div
+            [ngClass]="
+              crypto.priceChange1d.toString().startsWith('-')
+                ? 'cp-crypto-change negative'
+                : 'cp-crypto-change positive'">
+            {{ crypto.priceChange1d }}%
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

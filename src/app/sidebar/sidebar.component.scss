@@ -1,7 +1,60 @@
 .cp-sidebar {
     position: fixed;
     height: 100%;
-    width: 250px;
+    width: 350px;
+    padding: 30px 20px;
     background: #1c2338;
+    overflow-y: scroll;
     border-right: 1px solid #535f84;
+}
+.cp-crypto-item {
+    display: flex;
+
+
+    &:not(:first-child) {
+        padding-top: 15px;
+    }
+    &:not(:last-child) {
+        padding-bottom: 15px;
+        border-bottom: 1px solid #535f84;
+    }
+    .cp-crypto-details {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex: 1;
+    }
+    .cp-crypto-image {
+        width: 50px;
+        height: 50px;
+        margin-right: 20px;
+
+        img {
+            width: 100%;
+            height: auto;
+            border-radius: 50%;
+        }
+    }
+    .cp-crypto-name {
+        font-weight: 600;
+        color: #dfe2eb;
+    }
+    .cp-crypto-price-wrapper {
+        text-align: right;
+    }
+    .cp-crypto-price {
+        font-weight: 600;
+        color: #dfe2eb;
+    }
+    .cp-crypto-change {
+        font-size: 14px;
+
+        &.negative {
+            color: #c571a6;
+        }
+
+        &.positive {
+            color: #52e58e;
+        }
+    }
 }
