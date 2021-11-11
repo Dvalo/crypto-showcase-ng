@@ -1,9 +1,11 @@
+@import "src/styles/base";
+
 .cp-sidebar {
     position: fixed;
     height: 100%;
     width: 350px;
     padding: 10px 0;
-    background: #1c2338;
+    background: $bg-color-lighter;
     overflow-y: scroll;
 }
 .cp-crypto-item {

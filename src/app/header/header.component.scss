@@ -1,4 +1,7 @@
+@import "src/styles/base";
+
+
 .cp-header {
-    background: #535f84;
+    background: $bg-color-darker;
     height: 80px;
 }
