@@ -1,3 +1,9 @@
-.cp-content {
+.cp-content-wrapper {
     display: flex;
+}
+.cp-sidebar {
+    width: 350px;
+}
+.cp-content {
+    flex: 1;
 }

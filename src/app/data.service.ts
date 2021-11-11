@@ -10,4 +10,8 @@ export class DataService {
   getCrypto() {
     return this.http.get('https://api.coinstats.app/public/v1/coins?limit=50');
   }
+
+  getCryptoCharts() {
+    return this.http.get('https://api.coinstats.app/public/v1/charts?period=3m&coinId=bitcoin');
+  }
 }
