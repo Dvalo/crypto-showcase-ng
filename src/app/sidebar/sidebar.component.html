@@ -1,6 +1,11 @@
 <div class="cp-sidebar">
   <div class="cp-sidebar-inner" *ngIf="cryptoData">
-    <div class="cp-crypto-item" *ngFor="let crypto of cryptoData" (click)="newCrypto(crypto.id)">
+    <div
+      class="cp-crypto-item"
+      *ngFor="let crypto of cryptoData"
+      (click)="newCrypto(crypto.id)"
+      [ngClass]="currentCrypto === crypto.id ? 'active' : ''"
+    >
       <div class="cp-crypto-image">
         <img src="{{ crypto.icon }}" />
       </div>
@@ -15,7 +20,9 @@
             [ngClass]="
               crypto.priceChange1d.toString().startsWith('-')
                 ? 'cp-crypto-change negative'
-                : 'cp-crypto-change positive'">
+                : 'cp-crypto-change positive'
+            "
+          >
             {{ crypto.priceChange1d }}%
           </div>
         </div>

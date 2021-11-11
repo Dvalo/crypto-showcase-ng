@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { ActiveCryptoService } from '../active-crypto.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-sidebar',
@@ -8,6 +9,8 @@ import { ActiveCryptoService } from '../active-crypto.service';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
+  currentCrypto!: string;
+  subscription!: Subscription;
   cryptoData: any = [
     {
       id: 'bitcoin',
@@ -1229,10 +1232,17 @@ export class SidebarComponent implements OnInit {
   constructor(private data: DataService, private crypto: ActiveCryptoService) {}
 
   ngOnInit(): void {
+    this.subscription = this.crypto.currentCrypto.subscribe(
+      (data) => (this.currentCrypto = data)
+    );
     // this.data.getCrypto().subscribe(data => {
     //   this.cryptoData = data;
     //   console.log(this.cryptoData.coins);
     // })
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   newCrypto(crypto: string) {

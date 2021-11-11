@@ -2,20 +2,23 @@
     position: fixed;
     height: 100%;
     width: 350px;
-    padding: 30px 20px;
+    padding: 10px 0;
     background: #1c2338;
     overflow-y: scroll;
-    border-right: 1px solid #535f84;
 }
 .cp-crypto-item {
+    cursor: pointer;
     display: flex;
+    padding: 15px 10px;
+    margin: 0 20px;
+    transition: 0.15s ease-in-out;
 
-
-    &:not(:first-child) {
-        padding-top: 15px;
+    &:hover,
+    &.active {
+        background: rgb(83 95 132 / 20%);
     }
+
     &:not(:last-child) {
-        padding-bottom: 15px;
         border-bottom: 1px solid #535f84;
     }
     .cp-crypto-details {
