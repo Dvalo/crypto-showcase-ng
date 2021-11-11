@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
+import { ActiveCryptoService } from '../active-crypto.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -1225,12 +1226,16 @@ export class SidebarComponent implements OnInit {
     },
   ];
 
-  constructor(private data: DataService) {}
+  constructor(private data: DataService, private crypto: ActiveCryptoService) {}
 
   ngOnInit(): void {
     // this.data.getCrypto().subscribe(data => {
     //   this.cryptoData = data;
     //   console.log(this.cryptoData.coins);
     // })
+  }
+
+  newCrypto(crypto: string) {
+    this.crypto.changeCrypto(crypto);
   }
 }

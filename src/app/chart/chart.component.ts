@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
+import { ActiveCryptoService } from '../active-crypto.service';
+import { Subscription } from 'rxjs';
 import { EChartsOption } from 'echarts';
 
 @Component({
@@ -8,6 +10,8 @@ import { EChartsOption } from 'echarts';
   styleUrls: ['./chart.component.scss'],
 })
 export class ChartComponent implements OnInit {
+  currentCrypto: string = '';
+  subscription!: Subscription;
   cryptoChart: any = [];
   dateList: string[] = [];
   valueList: string[] = [];
@@ -18,8 +22,6 @@ export class ChartComponent implements OnInit {
         show: false,
         type: 'continuous',
         seriesIndex: 0,
-        min: 40000,
-        max: 60000,
       },
     ],
     tooltip: {
@@ -29,11 +31,11 @@ export class ChartComponent implements OnInit {
       {
         type: 'inside',
         start: 0,
-        end: 10,
+        end: 100,
       },
       {
         start: 0,
-        end: 10,
+        end: 50,
       },
     ],
     xAxis: [
@@ -51,11 +53,29 @@ export class ChartComponent implements OnInit {
     ],
   };
 
-  constructor(private data: DataService) {}
+  constructor(private data: DataService, private crypto: ActiveCryptoService) {}
 
   ngOnInit(): void {
-    this.data.getCryptoCharts().subscribe((data) => {
+    this.subscription = this.crypto.currentCrypto.subscribe((crypto) => {
+      this.currentCrypto = crypto;
+      this.getCryptoChart();
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  private getCryptoChart() {
+    this.data.getCryptoCharts('1m', this.currentCrypto).subscribe((data) => {
       this.cryptoChart = data;
+      let cryptoChartArr = [this.cryptoChart.chart];
+      let cryptoPrices: number[] = []
+        .concat(...cryptoChartArr)
+        .map((arr) => arr[1]);
+      const maxPrice: number = Math.max(...cryptoPrices);
+      const minPrice: number = Math.min(...cryptoPrices);
+
       this.dateList = this.cryptoChart.chart.map(function (item: any) {
         return new Date(item[0] * 1000).toISOString().slice(0, 10);
       });
@@ -63,6 +83,12 @@ export class ChartComponent implements OnInit {
         return item[1].toFixed(2);
       });
       this.mergeOptions = {
+        visualMap: [
+          {
+            min: minPrice,
+            max: maxPrice,
+          },
+        ],
         xAxis: [
           {
             data: this.dateList,

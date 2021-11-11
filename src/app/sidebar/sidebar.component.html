@@ -1,6 +1,6 @@
 <div class="cp-sidebar">
   <div class="cp-sidebar-inner" *ngIf="cryptoData">
-    <div class="cp-crypto-item" *ngFor="let crypto of cryptoData">
+    <div class="cp-crypto-item" *ngFor="let crypto of cryptoData" (click)="newCrypto(crypto.id)">
       <div class="cp-crypto-image">
         <img src="{{ crypto.icon }}" />
       </div>
