@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { ActiveCryptoService } from '../active-crypto.service';
 import { Subscription } from 'rxjs';
-import { dummyCryptos } from '../../utils/dummy';
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -12,9 +12,8 @@ export class SidebarComponent implements OnInit {
   currentCrypto!: string;
   subscription!: Subscription;
   searchText!: string;
-  cryptoData: any = dummyCryptos;
-
-  filteredData: any[] = this.cryptoData;
+  cryptoData: any = [];
+  filteredData: any[] = [];
 
   constructor(private data: DataService, private crypto: ActiveCryptoService) {}
 
@@ -22,10 +21,10 @@ export class SidebarComponent implements OnInit {
     this.subscription = this.crypto.currentCrypto.subscribe(
       (data) => (this.currentCrypto = data)
     );
-    // this.data.getCrypto().subscribe(data => {
-    //   this.cryptoData = data;
-    //   console.log(this.cryptoData.coins);
-    // })
+    this.data.getCrypto().subscribe((data) => {
+      this.cryptoData = data;
+      this.filteredData = this.cryptoData.coins;
+    });
   }
 
   ngOnDestroy() {
@@ -38,7 +37,7 @@ export class SidebarComponent implements OnInit {
 
   onKey(event: any) {
     const inputValue = event.target.value;
-    this.filteredData = this.handleSearch(this.cryptoData, inputValue);
+    this.filteredData = this.handleSearch(this.cryptoData.coins, inputValue);
   }
 
   handleSearch = (arr: any[], searchInput: string) => {
