@@ -8,5 +8,5 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 ## Preview
 
-![Homepage](https://i.imgur.com/bqG34bz.gif)
+![Homepage](https://i.imgur.com/wCPVp5K.gif)
 
