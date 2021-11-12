@@ -11,7 +11,9 @@ import { EChartsOption } from 'echarts';
 })
 export class ChartComponent implements OnInit {
   currentCrypto: string = '';
+  currentCryptoTimeline: string = '1y';
   subscription!: Subscription;
+  cryptoTimelines: string[] = ['24h', '1w', '1m', '3m', '6m', '1y', 'all'];
   cryptoChart: any = [];
   dateList: string[] = [];
   valueList: string[] = [];
@@ -58,7 +60,7 @@ export class ChartComponent implements OnInit {
   ngOnInit(): void {
     this.subscription = this.crypto.currentCrypto.subscribe((crypto) => {
       this.currentCrypto = crypto;
-      this.getCryptoChart();
+      this.getCryptoChart(this.currentCryptoTimeline);
     });
   }
 
@@ -66,8 +68,8 @@ export class ChartComponent implements OnInit {
     this.subscription.unsubscribe();
   }
 
-  private getCryptoChart() {
-    this.data.getCryptoCharts('1m', this.currentCrypto).subscribe((data) => {
+  private getCryptoChart(timeline: string) {
+    this.data.getCryptoCharts(timeline, this.currentCrypto).subscribe((data) => {
       this.cryptoChart = data;
       let cryptoChartArr = [this.cryptoChart.chart];
       let cryptoPrices: number[] = []
@@ -101,5 +103,12 @@ export class ChartComponent implements OnInit {
         ],
       };
     });
+  }
+
+  public updateTimeline(timeline: string) {
+    if (this.currentCryptoTimeline !== timeline) {
+      this.currentCryptoTimeline = timeline;
+      this.getCryptoChart(this.currentCryptoTimeline);
+    }
   }
 }
