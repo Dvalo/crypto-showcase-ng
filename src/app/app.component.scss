@@ -1,8 +1,18 @@
+@import "src/styles/base";
+@import "src/styles/bootstrap";
+
 .cp-content-wrapper {
     display: flex;
+    flex-direction: column;
+    
+    @include media-breakpoint-up(md) {
+        flex-direction: row;
+    }
 }
 .cp-sidebar {
-    width: 350px;
+    @include media-breakpoint-up(md) {
+        width: 350px;
+    }
 }
 .cp-content {
     flex: 1;
